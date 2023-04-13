@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "echarts": "^5.1.2",
     "element-ui": "^2.15.13",
+    "js-cookie": "3.0.1",
     "mockjs": "^1.1.0",
     "postcss-px2rem": "^0.3.0",
     "stylus": "^0.52.4",
