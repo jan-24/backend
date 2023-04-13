@@ -48,4 +48,7 @@ export default {
 .el-header {
   padding: 0;
 }
+.el-card__body, .el-main {
+  padding: 15px;
+}
 </style>
