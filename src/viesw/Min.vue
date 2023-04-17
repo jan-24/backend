@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="auto">
+    <el-aside width="auto" class="box">
       <commpot-aside @EventClick="EventClick" />
     </el-aside>
     <el-container>
@@ -48,7 +48,8 @@ export default {
 .el-header {
   padding: 0;
 }
-.el-card__body, .el-main {
-  padding: 15px;
+.el-card__body,
+.el-main {
+  padding: 10px;
 }
 </style>
