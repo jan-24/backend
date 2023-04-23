@@ -15,13 +15,12 @@
       </el-breadcrumb>
     </div>
     <div class="box-reltf">
+      <div>
+        <commpot-tian />
+      </div>
       <el-dropdown>
         <span class="el-dropdown-link">
-          <img
-            class="imges"
-            src="../assets/3da892c5e4a63f35ea9f12c162c8acb.jpg"
-            alt=""
-          />
+          <img class="imges" src="../assets/1.jpg" alt="" />
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
@@ -35,11 +34,15 @@
 <script>
 import { mapState } from "vuex";
 import Cookie from "js-cookie";
+import CommpotTian from '../components/CommpotTian.vue'
 export default {
   data () {
     return {
 
     }
+  },
+  components: {
+    CommpotTian
   },
   methods: {
     btnoffs () {
@@ -130,6 +133,7 @@ export default {
   }
 
   .box-reltf {
+    display: flex;
     .imges {
       width: 40px;
       height: 40px;

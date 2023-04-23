@@ -1,12 +1,23 @@
 <template>
-  <el-form :rules="rules" class="forms" ref="form" :model="form" label-width="80px">
+  <el-form
+    :rules="rules"
+    class="forms"
+    ref="form"
+    :model="form"
+    label-width="80px"
+  >
     <h3>系统登录</h3>
     <el-form-item label="用户名" prop="username">
       <el-input v-model="form.username"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="password">
-      <el-input type="password" v-model="form.password" @keyup.enter.native="submitForm('form')"></el-input>
+      <el-input
+        type="password"
+        v-model="form.password"
+        @keyup.enter.native="submitForm('form')"
+      ></el-input>
     </el-form-item>
+    <p style="font-size: 14px; margin-right: 150px">账号:admin 密码:admin</p>
     <el-form-item style="margin-right: 60px">
       <el-button type="primary" @click="submitForm('form')">提交</el-button>
       <el-button @click="resetForm('form')">重置</el-button>
@@ -20,7 +31,7 @@ import Cookie from 'js-cookie'
 import { getMenu } from '../api'
 export default {
   props: {},
-  data() {
+  data () {
     return {
       form: {
         username: '',
@@ -37,7 +48,7 @@ export default {
     }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       // // token信息
       // const token = Mock.Random.guid()
 
@@ -63,7 +74,7 @@ export default {
       });
 
     },
-    resetForm(formName) {
+    resetForm (formName) {
       this.$refs[formName].resetFields();
     },
     //验证登录

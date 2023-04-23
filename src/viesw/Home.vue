@@ -3,19 +3,22 @@
     <el-col :span="8" style="padding-right: 10px">
       <el-card class="box-card">
         <div class="box">
-          <img
-            class="mings"
-            src="@/assets/3da892c5e4a63f35ea9f12c162c8acb.jpg"
-            alt=""
-          />
+          <img class="mings" src="@/assets/1.jpg" alt="" />
           <div class="text">
             <p>Admin</p>
             <p>超级管理员</p>
           </div>
         </div>
         <div class="box-text">
-          <p>上次登录时间：<span>2022-01-05</span></p>
-          <p>上次登录地点：<span>深圳</span></p>
+          <p>
+            当前时间：<span>{{ Time }}</span>
+          </p>
+          <p>
+            当前位置：<span
+              >{{ currentCity.province }} {{ currentCity.city }}
+              {{ currentCity.district }}</span
+            >
+          </p>
         </div>
       </el-card>
       <el-card class="box-tad">
@@ -70,6 +73,7 @@
 <script>
 import { getData } from "@/api";
 import * as echarts from 'echarts';
+var geolocation = new qq.maps.Geolocation("PO2BZ-6RRWG-CVXQJ-QE7RK-FTYG3-QAFCX", "myapp");
 export default {
   data () {
     return {
@@ -118,10 +122,13 @@ export default {
           color: "#5ab1ef",
         },
       ],
+      currentCity: '', //当前位置信息
+      Time: '',//当前时间
     }
   },
   created () {
     this.getData()
+
   },
   methods: {
     async getData () {
@@ -244,10 +251,21 @@ export default {
       }
       // 使用刚指定的配置项和数据显示图表
       echarts3.setOption(option3)
+    },
+    //获取当前地址
+    showPosition (position) {
+      this.currentCity = position
     }
   },
   mounted () {
-
+    //获取当前地址
+    geolocation.getLocation(this.showPosition)
+    //当前时间
+    let data = new Date()
+    let datevalue1 = data.getFullYear()
+    let datevalue2 = data.getMonth() + 1
+    let datevalue3 = data.getDate()
+    this.Time = `${datevalue1}-${datevalue2}-${datevalue3}`
   }
 }
 </script>
