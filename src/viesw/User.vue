@@ -1,28 +1,13 @@
 <template>
   <div class="manage">
-    <el-dialog
-      title="新增用户"
-      :visible.sync="dialogVisible"
-      width="40%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="新增用户" :visible.sync="dialogVisible" width="40%" :before-close="handleClose">
       <!-- 用户表单信息 -->
-      <el-form
-        :inline="true"
-        :rules="rules"
-        ref="form"
-        :model="form"
-        label-width="110px"
-      >
+      <el-form :inline="true" :rules="rules" ref="form" :model="form" label-width="110px">
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="年龄" prop="age">
-          <el-input
-            v-model.number="form.age"
-            placeholder="请输入年龄"
-            autocomplete="off"
-          ></el-input>
+          <el-input v-model.number="form.age" placeholder="请输入年龄" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="性别" prop="sex">
           <el-select v-model="form.sex" placeholder="请选择性别">
@@ -31,13 +16,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="出生日期" prop="birth">
-          <el-date-picker
-            type="date"
-            placeholder="选择日期"
-            value-format="yyyy-MM-dd"
-            v-model="form.birth"
-            style="width: 100%"
-          ></el-date-picker>
+          <el-date-picker type="date" placeholder="选择日期" value-format="yyyy-MM-dd" v-model="form.birth"
+            style="width: 100%"></el-date-picker>
         </el-form-item>
         <el-form-item label="地址" prop="addr">
           <el-input v-model="form.addr" placeholder="请输入地址"></el-input>
@@ -52,6 +32,14 @@
     <div class="mange-header">
       <el-button type="primary" @click="handAdd">新增</el-button>
       <!-- 搜索区 -->
+      <el-form :model="userform" :inline="true">
+        <el-form-item>
+          <el-input clearable @keyup.enter.native="Submit" v-model.trim="userform.name" placeholder="请输入名称"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="Submit">查询</el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <div class="tadtext">
       <el-table height="90%" :data="tableData" stripe>
@@ -67,22 +55,13 @@
         <el-table-column prop="addr" label="地址"> </el-table-column>
         <el-table-column prop="sex" label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row)"
-              >编辑</el-button
-            >
-            <el-button type="danger" size="mini" @click="handDelet(scope.row)"
-              >删除</el-button
-            >
+            <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button type="danger" size="mini" @click="handDelet(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="block">
-        <el-pagination
-          layout="prev, pager, next"
-          :total="total"
-          @current-change="handChange"
-          :page-size="pageData.limit"
-        >
+        <el-pagination layout="prev, pager, next" :total="total" @current-change="handChange" :page-size="pageData.limit">
         </el-pagination>
       </div>
     </div>
@@ -92,7 +71,7 @@
 <script>
 import { getUserList, createUser, updateUser, deleteUser } from "../api";
 export default {
-  data () {
+  data() {
     return {
       dialogVisible: false,
       form: {
@@ -129,15 +108,18 @@ export default {
       pageData: {
         page: 1,
         limit: 13
-      }
+      },
+      userform: {
+        name: ''
+      },//搜索
     };
   },
-  created () {
-    this.getUserList(this.pageData)
+  created() {
+    this.getUserList({ ...this.pageData, ...this.userform })
   },
   methods: {
     //点击编辑
-    handleEdit (row) {
+    handleEdit(row) {
       console.log(row);
       this.mostTad = 1
       this.dialogVisible = true
@@ -145,7 +127,7 @@ export default {
       this.form = JSON.parse(JSON.stringify(row))
     },
     //点击删除
-    handDelet (data) {
+    handDelet(data) {
       console.log(data);
       this.$confirm('此操作将永久删除, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -161,12 +143,13 @@ export default {
       });
     },
     //点击新增
-    handAdd () {
+    handAdd() {
       this.mostTad = 0
+      console.log(this.mostTad);
       this.dialogVisible = true
     },
     //新增确认
-    onSubmit (form) {
+    onSubmit(form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
           if (this.mostTad === 0) {
@@ -182,7 +165,7 @@ export default {
       });
     },
     //弹窗关闭时 清空from表单
-    handleClose () {
+    handleClose() {
       //关闭弹窗
       this.dialogVisible = false
       //清空form表单
@@ -190,25 +173,24 @@ export default {
 
     },
     //点击取消
-    cotol () {
+    cotol() {
       this.handleClose()
     },
     //user列表数据接口
-    async getUserList (data) {
+    async getUserList(data) {
       const res = await getUserList({ params: data })
       console.log(data, res, 'user列表数据接口');
       this.tableData = res.data.list
-      console.log(res.data, '列表数据接口');
       //分页总条数，如果不存在为0
       this.total = res.data.count || 0
     },
     //新增接口
-    async createUser (data) {
+    async createUser(data) {
       const res = await createUser(data)
       console.log(res);
       if (res.data.code === 20000) {
         //重新获取user数据.
-        this.getUserList()
+        this.getUserList({ ...this.pageData, ...this.userform })
         //关闭弹窗
         this.dialogVisible = false
         //清空form表单
@@ -222,13 +204,15 @@ export default {
       }
     },
     //编辑接口
-    async updateUser (data) {
+    async updateUser(data) {
       const res = await updateUser(data)
       if (res.data.code === 20000) {
         //重新获取user数据.
-        this.getUserList()
+        this.getUserList({ ...this.pageData, ...this.userform })
         //关闭弹窗
         this.dialogVisible = false
+        //清空form表单
+        this.$refs.form.resetFields()
         this.$message({
           message: res.data.data.message,
           type: 'success'
@@ -238,11 +222,11 @@ export default {
       }
     },
     //删除接口
-    async deleteUser (data) {
+    async deleteUser(data) {
       const res = await deleteUser(data)
       if (res.data.code === 20000) {
         //重新获取user数据.
-        this.getUserList()
+        this.getUserList({ ...this.pageData, ...this.userform })
         this.$message({
           message: res.data.message,
           type: 'success'
@@ -253,11 +237,22 @@ export default {
 
     },
     //点击选择分页
-    handChange (val) {
+    handChange(val) {
       console.log(`当前页: ${val}`);
       this.pageData.page = val
       //重新获取user数据.
-      this.getUserList(this.pageData)
+      this.getUserList({ ...this.pageData, ...this.userform })
+    },
+    //搜索
+    Submit() {
+      clearTimeout(timer)
+      let canrun = true
+      if (!canrun) return
+      canrun = false
+      var timer = setTimeout(() => {
+        this.getUserList({ ...{ limit: 13, page: 1 }, ...this.userform })
+        canrun = true
+      }, 500);
     }
   }
 };
@@ -276,6 +271,13 @@ export default {
       bottom: 0;
       right: 20px;
     }
+  }
+
+  .mange-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px;
   }
 }
 </style>
