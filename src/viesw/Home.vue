@@ -255,17 +255,26 @@ export default {
     //获取当前地址
     showPosition (position) {
       this.currentCity = position
+    },
+    //当前时间
+    timet () {
+      //当前时间
+      let data = new Date()
+      let datevalue1 = data.getFullYear()
+      let datevalue2 = data.getMonth() + 1
+      let datevalue3 = data.getDate()
+      let datevalue4 = data.getHours()
+      let datevalue5 = data.getMinutes() < 10 ? '0' + data.getMinutes() : data.getMinutes()
+      let datevalue6 = data.getSeconds() < 10 ? '0' + data.getSeconds() : data.getSeconds()
+      this.Time = `${datevalue1}-${datevalue2}-${datevalue3}　${datevalue4}-${datevalue5}-${datevalue6}`
     }
   },
   mounted () {
     //获取当前地址
     geolocation.getLocation(this.showPosition)
-    //当前时间
-    let data = new Date()
-    let datevalue1 = data.getFullYear()
-    let datevalue2 = data.getMonth() + 1
-    let datevalue3 = data.getDate()
-    this.Time = `${datevalue1}-${datevalue2}-${datevalue3}`
+    setInterval(() => {
+      this.timet()
+    }, 1000);
   }
 }
 </script>
