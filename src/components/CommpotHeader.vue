@@ -67,11 +67,25 @@ export default {
       // var linkcss = c[index].querySelector('.is-link')
       // linkcss.style.cssText = 'color:#fff'
     },
+    //退出
     logaut () {
       //清除cookie中的token
       Cookie.remove('token')
-      //跳转登录页面
-      this.$router.push('/login')
+      //清除localStorage中的menu
+      localStorage.removeItem('menu')
+      //清除localStorage中的menu
+      this.$store.state.tad.tadsLst = [
+        //还原面包屑
+        {
+          path: '/',
+          name: 'home',
+          label: '首页',
+          icon: 's-home',
+          url: 'Home/Home',
+        },
+      ],
+        //跳转登录页面
+        this.$router.push('/login')
       this.$message({
         message: '退出成功',
         type: 'success'

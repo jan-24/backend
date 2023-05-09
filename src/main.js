@@ -32,4 +32,7 @@ new Vue({
   router,
   store,
   render: (h) => h(App),
+  created() {
+    store.commit('addMeu', router);
+  },
 }).$mount('#app');

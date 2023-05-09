@@ -61,6 +61,10 @@ export default {
               //信息存入cookie用于不同页面间的通信
               const token = data.data.token
               Cookie.set('token', token)
+              //获取菜单 数据，存入store
+              this.$store.commit('getMenu', data.data.menu)
+              //菜单动态路由
+              this.$store.commit('addMeu', this.$router)
               this.$router.push('/home')
               this.$message({
                 message: '登录成功',

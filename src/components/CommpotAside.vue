@@ -60,50 +60,6 @@
 export default {
   data () {
     return {
-      // isCollapse: false,
-      itemData: [
-        {
-          path: '/',
-          name: 'home',
-          label: '首页',
-          icon: 's-home',
-          url: 'Home/Home'
-        },
-        {
-          path: '/mall',
-          name: 'mall',
-          label: '商品管理',
-          icon: 'video-play',
-          url: 'MallManage/MallManage'
-        },
-        {
-          path: '/user',
-          name: 'suer',
-          label: '用户管理',
-          icon: 'user',
-          url: 'UserManage/UserManage'
-        },
-        {
-          label: '其他',
-          icon: 'iocation',
-          children: [
-            {
-              path: '/page1',
-              name: 'page1',
-              label: '页面1',
-              icon: 'setting',
-              url: 'Other/PageOne'
-            },
-            {
-              path: '/page2',
-              name: 'page2',
-              label: '页面2',
-              icon: 'setting',
-              url: 'Other/PageTwo'
-            }
-          ]
-        }
-      ]
     };
   },
   methods: {
@@ -125,6 +81,11 @@ export default {
 
   },
   computed: {
+    //菜单数据
+    itemData () {
+      //判断当前数据，如果缓存没有拿当前store
+      return JSON.parse(localStorage.getItem('menu')) || this.$store.state.tad.menu
+    },
     //没有子菜单
     noChildern () {
       return this.itemData.filter(item => !item.children)
@@ -135,7 +96,7 @@ export default {
     },
     isCollapse () {
       return this.$store.state.tad.isCollapse
-    }
+    },
   }
 }
 </script>

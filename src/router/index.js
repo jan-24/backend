@@ -14,13 +14,14 @@ const routes = [
   {
     path: '/',
     component: min,
+    name: 'Main',
     redirect: 'home',
     children: [
-      { path: 'home', name: 'home', component: home },
-      { path: 'user', name: 'suer', component: user },
-      { path: 'mall', name: 'mall', component: mall },
-      { path: 'page1', name: 'page1', component: PageOne },
-      { path: 'page2', name: 'page2', component: PageTwo },
+      // { path: 'home', name: 'home', component: home },
+      // { path: 'user', name: 'suer', component: user },
+      // { path: 'mall', name: 'mall', component: mall },
+      // { path: 'page1', name: 'page1', component: PageOne },
+      // { path: 'page2', name: 'page2', component: PageTwo },
     ],
   },
   {
